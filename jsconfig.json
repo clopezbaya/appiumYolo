@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "moduleResolution": "node",
+      "checkJs": true,
+      "allowJs": true
+    },
+    "include": ["./**/*.js", "wdio.conf.mjs"],
+    "exclude": ["node_modules"]
+  }
+  

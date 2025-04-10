@@ -1,5 +1,5 @@
 import { remote } from "webdriverio";
-import { config } from "../wdio.conf.js";
+import { config } from "../wdio.conf.mjs"
 import LoginPage from "./pageobjects/login.page.js";
 
 let driver;
@@ -7,6 +7,7 @@ let driver;
 async function getDriver() {
     if (!global.driver) {
         console.log("🚀 Iniciando WebDriver...");
+        // @ts-ignore
         global.driver = await remote(config);
     }
     return global.driver;
@@ -30,13 +31,6 @@ async function ensureLoggedIn() {
 
 before(async function () {
     await ensureLoggedIn();
-});
-
-// ❌ Elimina terminateApp para evitar que la app se cierre en cada ejecución.
-after(async function () {
-    if (global.driver) {
-        console.log("♻️ WebDriver finalizado pero la app sigue abierta.");
-    }
 });
 
 export { getDriver };

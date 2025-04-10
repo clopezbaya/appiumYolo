@@ -1,4 +1,7 @@
 class LoginPage {
+     /**
+    * @param {import("webdriverio").Browser} driver
+    */
     constructor(driver) {
         this.driver = driver;
     }
