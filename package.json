@@ -2,8 +2,8 @@
   "name": "Yolo",
   "type": "module",
   "scripts": {
-  "test": "npx wdio run wdio.conf.js --mochaOpts.grep='@smoke'",
-  "report": "npx allure generate allure-results --clean --single-file && npx allure open"
+    "test": "npx wdio run wdio.conf.js --mochaOpts.grep='@smoke'",
+    "report": "npx allure generate allure-results --clean --single-file && npx allure open"
   },
   "devDependencies": {
     "@babel/register": "^7.25.9",
@@ -23,5 +23,8 @@
     "mochawesome-report-generator": "^6.2.0",
     "wdio-mochawesome-reporter": "^6.1.1",
     "webdriverio": "^9.12.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }
