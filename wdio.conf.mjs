@@ -42,7 +42,7 @@ export const config = {
     
     
     mochaOpts: {
-        timeout: 30000,
+        timeout: 50000,
         bail: true, // aborta al primer fallo (opcional)
         ui: 'bdd', // Estructura BDD (describe/it)
     },

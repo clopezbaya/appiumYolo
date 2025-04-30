@@ -1,6 +1,7 @@
+import 'dotenv/config';
 import { remote } from "webdriverio";
-import { config } from "../wdio.conf.mjs"
-import LoginPage from "./pageobjects/login.page.js";
+import { config } from "../../wdio.conf.mjs"
+import LoginPage from "../pageobjects/login.page.js";
 
 let driver;
 
@@ -14,6 +15,11 @@ async function getDriver() {
 }
 
 async function ensureLoggedIn() {
+    if (process.env.SKIP_AUTO_LOGIN === 'true') {
+        console.log("🚫 Auto-login omitido por test.");
+        return;
+    }
+
     driver = await getDriver();
     const loginPage = new LoginPage(driver);
 
@@ -22,12 +28,13 @@ async function ensureLoggedIn() {
 
     if (!isUserLoggedIn) {
         console.log("🔑 No hay sesión activa, iniciando login...");
-        await loginPage.login("65502050", "2110");
+        await loginPage.login(process.env.CELULAR, process.env.PASSWORD);
         console.log("✅ Sesión iniciada correctamente.");
     } else {
         console.log("✅ Usuario ya estaba logueado.");
     }
 }
+
 
 before(async function () {
     await ensureLoggedIn();

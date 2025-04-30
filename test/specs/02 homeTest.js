@@ -1,4 +1,4 @@
-import { getDriver } from '../setup.js';
+import { getDriver } from '../utils/setup.js';
 import { expect } from '@wdio/globals';
 import HomePage from '../pageobjects/home.page.js';
 

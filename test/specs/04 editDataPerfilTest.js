@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { getDriver } from '../setup.js';
+import { getDriver } from '../utils/setup.js';
 import { expect } from '@wdio/globals';
 import HomePage from '../pageobjects/home.page.js';
 import MenuPage from '../pageobjects/menu.page.js';
@@ -8,7 +8,7 @@ import ModalEditEmailPage from '../pageobjects/Profile/modalEditEmail.page.js';
 import ModalEditAddressPage from '../pageobjects/Profile/modalEditAddress.page.js';
 import ModalEditBillingPage from '../pageobjects/Profile/modalEditBilling.page.js';
 
-describe('Test Perfil @smoke', () => {
+describe('Test Perfil', () => {
     let homePage;
     let menuPage;
     let profilePage;

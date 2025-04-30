@@ -1,7 +1,8 @@
-class LoginPage {
      /**
     * @param {import("webdriverio").Browser} driver
     */
+
+class LoginPage {
     constructor(driver) {
         this.driver = driver;
     }
@@ -22,6 +23,23 @@ class LoginPage {
         return this.driver.$('android=new UiSelector().className("android.widget.ImageView").instance(1)');
     }
 
+    //Invalid Login Modal "Recupera tu contraseña"
+    get modalInvalidPasswordTittle() {
+        return this.driver.$('android=new UiSelector().text("Credenciales inválidas")');
+    }
+
+    get btnSubmitInvalidPassword() {
+        return this.driver.$('android=new UiSelector().text("Entendido")');
+    }
+
+    get modalRecoveryPasswordTittle() {
+        return this.driver.$('android=new UiSelector().text("Recupera tu cuenta")');
+    }
+
+    get modalRecoveryPasswordReturnButton() {
+        return this.driver.$('android=new UiSelector().text("Volver")');
+    }
+
     async isLoggedIn() {
         try {
             return await this.homeScreen.isDisplayed();
@@ -31,14 +49,17 @@ class LoginPage {
     }
 
     async login(username, password) {
-        if (!(await this.isLoggedIn())) {
-            console.log("Iniciando sesión...");
-            await this.inputUsername.setValue(username);
-            await this.inputPassword.setValue(password);
-            await this.btnSubmit.click();
-        } else {
-            console.log("Ya estaba logueado.");
-        }
+        await this.inputUsername.setValue(username);
+        await this.inputPassword.setValue(password);
+        await this.btnSubmit.click();
+    }
+
+    async clickBtnSubmitInvalidPassword(){
+        await this.btnSubmitInvalidPassword.click()
+    }
+
+    async clickReturnModalRecoveryPassword(){
+        await this.modalRecoveryPasswordReturnButton.click()
     }
 }
 
