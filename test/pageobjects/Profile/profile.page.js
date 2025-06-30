@@ -1,3 +1,5 @@
+import { safeClick } from "../../utils/actionsCommons";
+
 class ProfilePage {
      /**
     * @param {import("webdriverio").Browser} driver
@@ -31,27 +33,27 @@ class ProfilePage {
     }
 
     async clickEditPassword() {
-        await this.editPassword.click();
+        await safeClick(this.editPassword);
     }
 
     async clickEditEmail() {
-        await this.editEmail.click();
+        await safeClick(this.editEmail);
     }
 
     async clickEditInvoice() {
-        await this.editInvoice.click();
+        await safeClick(this.editInvoice);
     }
 
     async clickEditAddress() {
-        await this.editAddress.click();
+        await safeClick(this.editAddress);
     }
 
     async clickSeeTermsAndConditions() {
-        await this.seeTermsAndConditions.click();
+        await safeClick(this.seeTermsAndConditions);
     }
 
     async clickReturnBack() {
-        await this.returnBack.click();
+        await safeClick(this.returnBack);
     }
 
     async newEmailLocator(newEmail) {
@@ -65,6 +67,7 @@ class ProfilePage {
     async newAddressLocator(newAddress) {
         return this.driver.$(`android=new UiSelector().text("${newAddress}")`)
     }
+
 }
 
 export default ProfilePage;

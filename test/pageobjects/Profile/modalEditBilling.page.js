@@ -1,3 +1,4 @@
+import { safeClick, safeSetValue, simulateTyping } from "../../utils/actionsCommons";
 
     /**
     * @param {import("webdriverio").Browser} driver
@@ -24,15 +25,14 @@ class ModalEditBillingPage {
     }
 
     async changeBillingData(newNit, newNameBilling) {
-        await this.nitField.setValue(newNit)
-        await this.nameBillingField.setValue(newNameBilling)
-        await this.driver.hideKeyboard();
-        await this.updateBillingDataButton.click();
+        await safeSetValue(this.nitField, newNit)
+        await simulateTyping(this.nameBillingField, newNameBilling, this.driver)
+        await safeClick(this.updateBillingDataButton);
         await this.driver.pause(5000);
     }
 
     async clickReturn() {
-        await this.returnButton.click();
+        await safeClick(this.returnButton);
     }
 }
 

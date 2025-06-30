@@ -1,3 +1,5 @@
+import { safeClick } from "../utils/actionsCommons";
+
 class MenuPage {
      /**
     * @param {import("webdriverio").Browser} driver
@@ -24,19 +26,19 @@ class MenuPage {
 
 
     async clickProfile() {
-        await this.profile.click();
+        await safeClick(this.profile);
     }
 
     async clickClientAttention() {
-        await this.clientAttention.click();
+        await safeClick(this.clientAttention);
     }
 
     async clickRateOurApp() {
-        await this.rateOurApp.click();
+        await safeClick(this.rateOurApp);
     }
 
     async clickSingOut() {
-        await this.singOut.click();
+        await safeClick(this.singOut);
     }
 }
 

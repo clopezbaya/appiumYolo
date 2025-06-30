@@ -1,4 +1,6 @@
-     /**
+import 'dotenv/config';
+import { safeClick, safeSetValue } from '../utils/actionsCommons';
+ /**
     * @param {import("webdriverio").Browser} driver
     */
 
@@ -18,11 +20,6 @@ class LoginPage {
     get btnSubmit() {
         return this.driver.$('//android.widget.TextView[@content-desc="Inicia sesión"]');
     }
-
-    get homeScreen() {
-        return this.driver.$('android=new UiSelector().className("android.widget.ImageView").instance(1)');
-    }
-
     //Invalid Login Modal "Recupera tu contraseña"
     get modalInvalidPasswordTittle() {
         return this.driver.$('android=new UiSelector().text("Credenciales inválidas")');
@@ -40,26 +37,18 @@ class LoginPage {
         return this.driver.$('android=new UiSelector().text("Volver")');
     }
 
-    async isLoggedIn() {
-        try {
-            return await this.homeScreen.isDisplayed();
-        } catch (error) {
-            return false;
-        }
-    }
-
     async login(username, password) {
-        await this.inputUsername.setValue(username);
-        await this.inputPassword.setValue(password);
-        await this.btnSubmit.click();
+        await safeSetValue(this.inputUsername, username);
+        await safeSetValue(this.inputPassword, password);
+        await safeClick(this.btnSubmit);
     }
 
     async clickBtnSubmitInvalidPassword(){
-        await this.btnSubmitInvalidPassword.click()
+        await safeClick(this.btnSubmitInvalidPassword)
     }
 
     async clickReturnModalRecoveryPassword(){
-        await this.modalRecoveryPasswordReturnButton.click()
+        await safeClick(this.modalRecoveryPasswordReturnButton);
     }
 }
 

@@ -1,11 +1,14 @@
 import { getDriver } from '../utils/setup.js';
 import { expect } from '@wdio/globals';
 import MovementsPage from '../pageobjects/movements.page.js';
+import HomePage from '../pageobjects/home.page.js';
 
-describe('Test de movimientos', () => {
+describe('Test de movimientos @smoke', () => {
     let movementsPage;
+    let homePage;
 
     before(async () => {
+        homePage = new HomePage(await getDriver());
         movementsPage = new MovementsPage(await getDriver());
     });
 

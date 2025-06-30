@@ -1,6 +1,8 @@
   /**
     * @param {import("webdriverio").Browser} driver
   */
+import { safeClick } from "../utils/actionsCommons.js";
+import { scrollToElement } from "../utils/scrollToElement.js";
 
 class HomePage {
 
@@ -25,69 +27,103 @@ class HomePage {
         return this.driver.$('android=new UiSelector().text("Carga dinero a YOLO pago")')
     }
 
+    get sendOrReceibeMoneyOption() {
+        return this.driver.$('android=new UiSelector().text("Envía o cobra\ndinero")')
+    }
+
+    get chargeCreditOption() {
+        return this.driver.$('android=new UiSelector().text("Recarga\n crédito")')
+    }
+
+    get sendOrReceibeMoneyQROption() {
+        return this.driver.$('android=new UiSelector().text("Cobra o\npaga con QR")')
+    }
+
+    get attentionPoints() {
+        return this.driver.$('android=new UiSelector().text("Puntos de\natención")')
+    }
+
     get inviteFriendsToYoloOption() {
         return this.driver.$('android=new UiSelector().text("Invita amigos a YOLO pago")')
     }
 
     get viewBalanceOption() {
-        return this.driver.$('//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[3]/android.view.ViewGroup[1]/android.widget.ImageView')
+        return this.driver.$('android= new UiSelector().className("android.widget.ImageView").instance(3)')
     }
 
     get balanceAmmount() {
         return this.driver.$('android=new UiSelector().textContains("Bs")')
     }
 
+
     get menuOption() {
         return this.driver.$('android=new UiSelector().className("android.view.View").instance(0)')
     }
     
     async scrollToSendOrReceiveMoneyOption() {
-        return (await this.scrollToElement("Envía o cobra\ndinero"));
+        return (await scrollToElement("Envía o cobra\ndinero", this.driver));
     }
 
     async scrollToReceiveOrPayMoneyQROption() {
-        return (await this.scrollToElement("Cobra o\npaga con QR"));
+        return (await scrollToElement("Cobra o\npaga con QR", this.driver));
     }
 
     async scrollToServicesPayment() {
-        return (await this.scrollToElement("Paga\n servicios"));
+        return (await scrollToElement("Paga\n servicios", this.driver));
     }
 
     async scrollToChargueCreditOption() {
-        return (await this.scrollToElement("Recarga\n crédito"));
+        return (await scrollToElement("Recarga\n crédito", this.driver));
     }
 
     async scrollToWithdrawCashOption() {
-        return (await this.scrollToElement("Retira dinero\nen efectivo"));
+        return (await scrollToElement("Retira dinero\nen efectivo", this.driver));
     }
 
     async scrollToAtentionPointsOption() {
-        return (await this.scrollToElement("Puntos de\natención"));
+        return (await scrollToElement("Puntos de\natención", this.driver));
     }
 
     async scrollToCollectMoneyOption() {
-        return (await this.scrollToElement("Cobra giros\ny remesas"));
+        return (await scrollToElement("Cobra giros\ny remesas", this.driver));
     }
 
     async scrollToBenefitsClubOption() {
-        return (await this.scrollToElement("Club de\nBeneficios"));
+        return (await scrollToElement("Club de\nBeneficios", this.driver));
     }
 
     async scrollToStoresPaymentOption() {
-        return (await this.scrollToElement("Paga a\ncomercios"));
+        return (await scrollToElement("Paga a\ncomercios", this.driver));
     }
 
     async clickMovements() {
-        await this.movementsUser.click();
+        await safeClick(this.movementsUser);
+    }
+
+    async clickAttentionPoints() {
+        await this.scrollToAtentionPointsOption();
+        await safeClick(this.attentionPoints);
+    }
+
+    async clickSendOrReceiveMoneyOption() {
+        await safeClick(this.sendOrReceibeMoneyOption);
+    }
+
+    async clickSendOrReceiveMoneyQROption() {
+        await safeClick(this.sendOrReceibeMoneyQROption);
+    }
+
+    async clickChargeCreditOption() {
+        await safeClick(this.chargeCreditOption);
     }
 
     async clickMenuOptions() {
         await this.driver.pause(5000);
-        await this.menuOption.click();
+        await safeClick(this.menuOption);
     }
 
     async clickViewBalanceOption() {
-        await this.viewBalanceOption.click();
+        await safeClick(this.viewBalanceOption);
     }
 
     async getBalanceText() {
@@ -112,59 +148,11 @@ class HomePage {
         return (await this.getBalanceValue()) !== null;
     }
 
-    async scrollToElement(elementText) {
+    async isLoggedIn() {
         try {
-            // @ts-ignore
-            let element = await $(`//*[@text='${elementText}']`);
-    
-            // Verificar si el elemento ya está visible antes de hacer scroll
-            if (await element.isDisplayed()) {
-                console.log("Elemento ya visible");
-                return element;
-            }
-    
-            let attempts = 0;
-            const maxAttempts = 2; // Evitar bucles infinitos
-    
-            while (attempts < maxAttempts) {
-                // Verificar si el elemento es visible antes de hacer scroll
-                if (await element.isDisplayed()) {
-                    console.log("ELEMENTO ENCONTRADO");
-                    await element.waitForDisplayed({ timeout: 5000 });
-                    return element;
-                }
-    
-                try {
-                    console.log(`Intento ${attempts + 1}: Haciendo swipe hacia arriba`);
-    
-                    // Hacer swipe manualmente con coordenadas
-                    await this.driver.performActions([
-                        {
-                            type: "pointer",
-                            id: "finger1",
-                            parameters: { pointerType: "touch" },
-                            actions: [
-                                { type: "pointerMove", duration: 0, x: 500, y: 1500 }, // Punto inicial
-                                { type: "pointerDown", button: 0 },
-                                { type: "pause", duration: 500 },
-                                { type: "pointerMove", duration: 1000, x: 500, y: 500 }, // Punto final (Swipe arriba)
-                                { type: "pointerUp", button: 0 }
-                            ],
-                        }
-                    ]);
-                } catch (scrollError) {
-                    console.warn(`Error en intento ${attempts + 1}: `, scrollError);
-                }
-    
-                attempts++;
-            }
-    
-            console.error(`No se encontró el elemento después de ${maxAttempts} intentos`);
-            return null;
-    
+            return await this.tittleMovements.isDisplayed();
         } catch (error) {
-            console.error("Error general en scrollToElement: ", error);
-            return null;
+            return false;
         }
     }
     

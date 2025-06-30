@@ -1,4 +1,5 @@
-    /**
+import { safeClick, simulateTyping } from "../../utils/actionsCommons";
+   /**
     * @param {import("webdriverio").Browser} driver
     */
 class ModalEditAddressPage {
@@ -19,14 +20,13 @@ class ModalEditAddressPage {
     }
 
     async changeAddress(newAddress) {
-        await this.addressField.setValue(newAddress)
-        await this.driver.hideKeyboard();
-        await this.updateAddressDataButton.click();
+        await simulateTyping(this.addressField, newAddress, this.driver)
+        await safeClick(this.updateAddressDataButton);
         await this.driver.pause(5000);
     }
 
     async clickReturn() {
-        await this.returnButton.click();
+        await safeClick(this.returnButton);
     }
 }
 

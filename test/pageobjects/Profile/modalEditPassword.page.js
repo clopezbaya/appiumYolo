@@ -1,3 +1,5 @@
+import { safeClick, safeSetValue } from "../../utils/actionsCommons";
+
 class ModalEditPasswordPage {
 
     /**
@@ -24,10 +26,10 @@ class ModalEditPasswordPage {
     }
 
     async changuePassword(oldPassword, newPassword) {
-        await this.currentPasswordField.setValue(oldPassword)
-        await this.newPasswordField.setValue(newPassword)
-        await this.repeatNewPasswordField.setValue(newPassword)
-        await this.changePasswordButton.click();
+        await safeSetValue(this.currentPasswordField, oldPassword)
+        await safeSetValue(this.newPasswordField, newPassword)
+        await safeSetValue(this.repeatNewPasswordField, newPassword)
+        await safeClick(this.changePasswordButton);
     }
 }
 

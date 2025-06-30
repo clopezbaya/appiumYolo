@@ -7,14 +7,16 @@ import ProfilePage from '../pageobjects/Profile/profile.page.js';
 import ModalEditEmailPage from '../pageobjects/Profile/modalEditEmail.page.js';
 import ModalEditAddressPage from '../pageobjects/Profile/modalEditAddress.page.js';
 import ModalEditBillingPage from '../pageobjects/Profile/modalEditBilling.page.js';
+import ViewTermsAndConditionsPage from '../pageobjects/Profile/viewTermsAndConditions.page.js';
 
-describe('Test Perfil', () => {
+describe('Test Perfil @smoke', () => {
     let homePage;
     let menuPage;
     let profilePage;
     let modalEditEmail;
     let modalEditAddress;
     let modalEditBilling;
+    let viewTermsAndConditions;
 
     before(async () => {
         homePage = new HomePage(await getDriver());
@@ -23,9 +25,10 @@ describe('Test Perfil', () => {
         modalEditAddress = new ModalEditAddressPage(await getDriver());
         modalEditEmail = new ModalEditEmailPage(await getDriver());
         modalEditBilling = new ModalEditBillingPage(await getDriver());
+        viewTermsAndConditions = new ViewTermsAndConditionsPage(await getDriver());
     });
 
-    it('Debería editarse correctamente el email', async () => {
+    it('Se edita correctamente el email', async () => {
         await homePage.clickMenuOptions();
         await menuPage.clickProfile();
         await profilePage.clickEditEmail();
@@ -40,7 +43,7 @@ describe('Test Perfil', () => {
         await expect(emailElement).toBeDisplayed();
     });
 
-    it('Debería editarse correctamente los datos de Facturacion', async () => {
+    it('Se edita correctamente los datos de Facturacion', async () => {
         await profilePage.clickEditInvoice();
         await modalEditBilling.changeBillingData(process.env.NIT_EDIT_PROFILE, process.env.BILLING_NAME_EDIT_PROFILE);
        
@@ -53,7 +56,7 @@ describe('Test Perfil', () => {
         await expect(billingElement).toBeDisplayed();
     });
 
-    it('Debería editarse correctamente la direccion del cliente', async () => {
+    it('Se edita correctamente la direccion del cliente', async () => {
         await profilePage.clickEditAddress();
         await modalEditAddress.changeAddress(process.env.ADDRESS_EDIT_PROFILE);
        
@@ -65,4 +68,14 @@ describe('Test Perfil', () => {
         const addressElement = await profilePage.newAddressLocator(process.env.ADDRESS_EDIT_PROFILE);
         await expect(addressElement).toBeDisplayed();
     });
+
+    it('Se descarga correctamente los terminos y condiciones de servicio', async () => {
+        const oldActivity = await viewTermsAndConditions.getCurrentActivity();
+        await viewTermsAndConditions.scrollToTermsAndConditionsOption(); 
+        await profilePage.clickSeeTermsAndConditions();
+        await viewTermsAndConditions.downloadTermsAndConditions();
+        const newActivity = await viewTermsAndConditions.getCurrentActivity();
+        expect(newActivity).not.toEqual(oldActivity);
+    });
+
 });

@@ -19,11 +19,18 @@ const pool = new Pool({
 
 export async function resetLogin(username) {
   await pool.query(
-    `UPDATE users SET lock_status = 0 WHERE phone_number = $1`,
+    `UPDATE users SET lock_status = 0, status_code = 1, imei_updated = 0 WHERE phone_number = $1 AND status_code != 4`,
     [username]
   );
-  await pool.end();
   console.log("✅ Lock Status Password Username Reset Succesfull...!!!! .");
+}
+
+export async function resetEmail(username) {
+  await pool.query(
+    `UPDATE users SET imei_updated = 0 WHERE phone_number = $1 AND status_code != 4`,
+    [username]
+  );
+  console.log("✅ Email Reset Succesfull...!!!! .");
 }
 
 export async function closeConnection() {

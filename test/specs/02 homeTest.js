@@ -2,7 +2,7 @@ import { getDriver } from '../utils/setup.js';
 import { expect } from '@wdio/globals';
 import HomePage from '../pageobjects/home.page.js';
 
-describe('Test de la vista Home en Android', () => {
+describe('Test de la vista Home en Android @smoke', () => {
     let homePage;
 
     before(async () => {
@@ -10,15 +10,13 @@ describe('Test de la vista Home en Android', () => {
     });
 
     it('Debería verse correctamente el Home', async () => {
-        await expect(homePage.viewBalanceOption).toBeDisplayed();
+        await expect(homePage.balanceAmmount).toBeDisplayed();
     });
 
     it('Deberia mostrar el balance en números después del click', async () => {
         await homePage.clickViewBalanceOption();
         const balanceValue = await homePage.getBalanceValue();
-
         console.log("🔎 Balance obtenido:", balanceValue);
-
         await expect(balanceValue).not.toBeNull(); 
         await expect(typeof balanceValue).toBe('number'); 
     });

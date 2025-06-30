@@ -1,3 +1,5 @@
+import { safeClick } from "../utils/actionsCommons";
+
 class MovementsPage {
      /**
     * @param {import("webdriverio").Browser} driver
@@ -15,7 +17,7 @@ class MovementsPage {
     }
 
     async clickMovements() {
-        await this.movementsUser.click();
+        await safeClick(this.movementsUser);
     }
 }
 

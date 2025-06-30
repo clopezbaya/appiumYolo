@@ -3,3 +3,5 @@ allure-report/
 allure-results/
 errorShots/
 .env
+app.apk
+logs/

@@ -1,3 +1,5 @@
+import { safeClick, simulateTyping } from "../../utils/actionsCommons";
+
 class ModalEditEmailPage {
 
     /**
@@ -20,15 +22,14 @@ class ModalEditEmailPage {
     }
 
     async changeEmail(newEmail) {
-        await this.emailField.setValue(newEmail)
-        await this.driver.hideKeyboard();
+        await simulateTyping(this.emailField,newEmail, this.driver)
         await this.updateEmailButton.click();
         // @ts-ignore
         await this.driver.pause(5000);
     }
 
     async clickReturn() {
-        await this.returnButton.click();
+        await safeClick(this.returnButton);
     }
 }
 
