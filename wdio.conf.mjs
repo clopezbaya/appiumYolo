@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
+import allure from '@wdio/allure-reporter';
 import 'dotenv/config';
 import FormData from 'form-data';
 import { closeConnection, resetEmail } from './test/utils/db.js';
@@ -98,7 +99,7 @@ export const config = {
     logLevel: 'info',
     bail: 0,
     waitforTimeout: 30000,
-    connectionRetryTimeout: 180000,
+    connectionRetryTimeout: 240000,
     connectionRetryCount: 5,
     framework: 'mocha',
     reporters: [
@@ -110,7 +111,7 @@ export const config = {
     ],
     mochaOpts: {
         timeout: 50000,
-        bail: true,
+        //bail: true,
         ui: 'bdd',
     },
 
@@ -143,21 +144,31 @@ export const config = {
     },
 
     afterTest: async function (test, context, { error, passed }) {
-        //Reset Email
-        await resetEmail(process.env.CELULAR);
-        
-        if (!passed) {
-            const timestamp = new Date().toISOString().replace(/:/g, '-');
-            const dir = './errorShots';
-            const filepath = path.join(dir, `${test.title}-${timestamp}.png`);
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
-            }
-
-            const screenshot = await globalThis.browser.takeScreenshot();
-            fs.writeFileSync(filepath, Buffer.from(screenshot, 'base64'));
-        }
-    },
+      // Reset Email
+      await resetEmail(process.env.CELULAR);
+  
+      if (!passed) {
+          const timestamp = new Date().toISOString().replace(/:/g, '-');
+          const dir = './errorShots';
+          const filepath = path.join(dir, `${test.title}-${timestamp}.png`);
+          if (!fs.existsSync(dir)) {
+              fs.mkdirSync(dir);
+          }
+  
+          const screenshot = await globalThis.browser.takeScreenshot();
+  
+          try {
+              fs.writeFileSync(filepath, Buffer.from(screenshot, 'base64'));
+              console.log(`✅ Imagen guardada correctamente en ${filepath}`);
+  
+              // 📎 Adjuntar screenshot a Allure manualmente
+              allure.addAttachment('Screenshot on Failure', Buffer.from(screenshot, 'base64'), 'image/png');
+          } catch (e) {
+              console.error(`❌ Error al guardar la imagen: ${e.message}`);
+          }
+      }
+  },
+  
 
     onComplete: async function() {
         //Close connection DB

@@ -1,10 +1,10 @@
 import sharp from 'sharp';
-import { getDriver } from '../utils/setup.js';
-import ModalPayOrChargeMoneyQR from '../pageobjects/Payments/QR-P2P/modalPayOrChargeMoneyQR.page.js';
-import ViewChargeMoney from '../pageobjects/Payments/QR-P2P/viewChargeMoney.page.js';
+import { getDriver } from '../../utils/setup.js';
+import ModalPayOrChargeMoneyQR from '../../pageobjects/Payments/QR-P2P/modalPayOrChargeMoneyQR.page.js';
+import ViewChargeMoney from '../../pageobjects/Payments/QR-P2P/viewChargeMoney.page.js';
 import { expect } from '@wdio/globals';
-import { compareQR } from '../utils/compareQR.js';
-import HomePage from '../pageobjects/home.page.js';
+import { compareQR } from '../../utils/compareQR.js';
+import HomePage from '../../pageobjects/home.page.js';
 import fs from 'fs';
 
 describe('🔍 Verificar generación de QR @smoke', () => {

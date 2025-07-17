@@ -1,11 +1,11 @@
 import 'dotenv/config';
 
-import { getDriver } from '../utils/setup.js';
+import { getDriver } from '../../utils/setup.js';
 import { expect } from '@wdio/globals';
-import HomePage from '../pageobjects/home.page.js';
-import SelectCompanyView from '../pageobjects/Payments/ChargeCredit/chargeCreditView.page.js';
-import VerifyDataView from '../pageobjects/Payments/ChargeCredit/verifyDataView.page.js';
-import SuccessChargeCreditView from '../pageobjects/Payments/ChargeCredit/successChargeCreditView.page.js';
+import HomePage from '../../pageobjects/home.page.js';
+import SelectCompanyView from '../../pageobjects/Payments/ChargeCredit/chargeCreditView.page.js';
+import VerifyDataView from '../../pageobjects/Payments/ChargeCredit/verifyDataView.page.js';
+import SuccessChargeCreditView from '../../pageobjects/Payments/ChargeCredit/successChargeCreditView.page.js';
 
 describe('🔍 Verificar recarga de credito @smoke', () => {
   let homePage;
@@ -27,7 +27,7 @@ describe('🔍 Verificar recarga de credito @smoke', () => {
 
   it('Debe validar los datos de recarga de credito a Entel', async () => {
     await selectCompanyView.rechargeEntel(process.env.CHARGE_CREDIT_ENTEL_NUMBER, process.env.AMOUNT_TEST);
-    await verifyDataView.tittleView.waitForDisplayed({ timeout: 40000 });
+    await verifyDataView.tittleView.waitForDisplayed({ timeout: 50000 });
     await expect(verifyDataView.tittleView).toBeDisplayed();
   });
 

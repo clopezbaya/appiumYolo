@@ -1,8 +1,9 @@
 {
-  "name": "Yolo",
+  "name": "yolo",
   "type": "module",
   "scripts": {
     "testSmoke": "npx wdio run wdio.conf.js --mochaOpts.grep='@smoke'",
+    "testRegression": "npx wdio run wdio.conf.js --mochaOpts.grep='@regression'",
     "test": "npx wdio run wdio.conf.js --mochaOpts.grep='@test'",
     "report": "npx allure generate allure-results --clean --single-file && npx allure open"
   },

@@ -1,7 +1,7 @@
-import { getDriver } from '../utils/setup.js';
+import { getDriver } from '../../utils/setup.js';
 import { expect } from '@wdio/globals';
-import MovementsPage from '../pageobjects/movements.page.js';
-import HomePage from '../pageobjects/home.page.js';
+import MovementsPage from '../../pageobjects/movements.page.js';
+import HomePage from '../../pageobjects/home.page.js';
 
 describe('Test de movimientos @smoke', () => {
     let movementsPage;

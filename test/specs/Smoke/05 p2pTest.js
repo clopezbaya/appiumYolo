@@ -1,13 +1,13 @@
 import 'dotenv/config';
-import { getDriver } from '../utils/setup.js';
+import { getDriver } from '../../utils/setup.js';
 import { expect } from '@wdio/globals';
-import HomePage from '../pageobjects/home.page.js';
-import ModalSendOrTranser from '../pageobjects/Payments/Common Payments/modalSendOrTransfer.page.js';
-import ModalConfirmAccessContacts from '../pageobjects/Payments/P2P/modalConfirmAccessContacts.page.js';
-import ContactsPayment from '../pageobjects/Payments/P2P/contactsPayment.page.js';
-import EnterAmountOrReason from '../pageobjects/Payments/Common Payments/enterAmountAndReason.page.js';
-import ViewConfirmTransaction from '../pageobjects/Payments/Common Payments/viewConfirmTransaction.page.js';
-import ViewTransactionSuccess from '../pageobjects/Payments/Common Payments/viewTransactionSuccess.page.js';
+import HomePage from '../../pageobjects/home.page.js';
+import ModalSendOrTranser from '../../pageobjects/Payments/Common Payments/modalSendOrTransfer.page.js';
+import ModalConfirmAccessContacts from '../../pageobjects/Payments/P2P/modalConfirmAccessContacts.page.js';
+import ContactsPayment from '../../pageobjects/Payments/P2P/contactsPayment.page.js';
+import EnterAmountOrReason from '../../pageobjects/Payments/Common Payments/enterAmountAndReason.page.js';
+import ViewConfirmTransaction from '../../pageobjects/Payments/Common Payments/viewConfirmTransaction.page.js';
+import ViewTransactionSuccess from '../../pageobjects/Payments/Common Payments/viewTransactionSuccess.page.js';
 
 describe('Test Transaccion P2P @smoke', () => {
     let homePage;

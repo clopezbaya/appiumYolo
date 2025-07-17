@@ -1,10 +1,10 @@
-process.env.SKIP_AUTO_LOGIN = 'true';
 import 'dotenv/config';
-import { getDriver } from '../utils/setup.js';
+process.env.SKIP_AUTO_LOGIN = 'true';
+import { getDriver } from '../../utils/setup.js';
 import { expect } from '@wdio/globals';
-import LoginPage from '../pageobjects/login.page.js';
-import FirstViewPage from '../pageobjects/firstView.page.js';
-import HomePage from '../pageobjects/home.page.js';
+import LoginPage from '../../pageobjects/login.page.js';
+import FirstViewPage from '../../pageobjects/firstView.page.js';
+import HomePage from '../../pageobjects/home.page.js';
 
 describe('Test de Login en App Android @smoke', () => {
     let loginPage;

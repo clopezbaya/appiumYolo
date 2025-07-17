@@ -1,15 +1,15 @@
 import 'dotenv/config';
 
-import { getDriver } from '../utils/setup.js';
-import ModalPayOrChargeMoneyQR from '../pageobjects/Payments/QR-P2P/modalPayOrChargeMoneyQR.page.js';
+import { getDriver } from '../../utils/setup.js';
+import ModalPayOrChargeMoneyQR from '../../pageobjects/Payments/QR-P2P/modalPayOrChargeMoneyQR.page.js';
 import { expect } from '@wdio/globals';
-import HomePage from '../pageobjects/home.page.js';
-import ViewPayMoneyQR from '../pageobjects/Payments/QR-P2P/viewPayMoneyQR.page.js';
-import EnterAmountOrReason from '../pageobjects/Payments/Common Payments/enterAmountAndReason.page.js';
-import ViewConfirmTransaction from '../pageobjects/Payments/Common Payments/viewConfirmTransaction.page.js';
-import ViewTransactionSuccess from '../pageobjects/Payments/Common Payments/viewTransactionSuccess.page.js';
+import HomePage from '../../pageobjects/home.page.js';
+import ViewPayMoneyQR from '../../pageobjects/Payments/QR-P2P/viewPayMoneyQR.page.js';
+import EnterAmountOrReason from '../../pageobjects/Payments/Common Payments/enterAmountAndReason.page.js';
+import ViewConfirmTransaction from '../../pageobjects/Payments/Common Payments/viewConfirmTransaction.page.js';
+import ViewTransactionSuccess from '../../pageobjects/Payments/Common Payments/viewTransactionSuccess.page.js';
 
-describe('🔍 Verificar pago por QR @smoke', () => {
+describe('🔍 Verificar pago por QR @smoke @test', () => {
   let homePage;
   let modalQR;
   let viewPayment;
@@ -27,10 +27,10 @@ describe('🔍 Verificar pago por QR @smoke', () => {
   });
 
   it('Debe verificar que se puede abrir el QR para pago', async () => {
+    await viewPayment.chargeQR();
     await homePage.clickSendOrReceiveMoneyQROption();
     await expect(modalQR.tittleView).toBeDisplayed();
     await modalQR.clickPayButton();
-    await viewPayment.chargeQR();
     await expect(enterAmountAndReason.tittleView).toBeDisplayed();
   });
 
