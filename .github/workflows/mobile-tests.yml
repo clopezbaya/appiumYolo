@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: "Tag del release (ej: v1.2.0)"
+        description: 'Release tag que contiene el APK (ej: v1.0.0)'
         required: true
+        default: 'v1.0.0'
 
 jobs:
   mobile-tests:
@@ -17,11 +18,11 @@ jobs:
 
     - name: 📥 Download APK from GitHub Release
       run: |
-        mkdir -p apk
-        gh release download ${{ inputs.release_tag }} \
-          --repo=${{ github.repository }} \
-          --pattern "app.apk" \
-          --dir=./
+         mkdir -p apk
+         gh release download ${{ github.event.inputs.release_tag }} \
+           --repo=${{ github.repository }} \
+           --pattern "app.apk" \
+           --dir=./
 
     - name: ⚙️ Set up Node.js
       uses: actions/setup-node@v4
