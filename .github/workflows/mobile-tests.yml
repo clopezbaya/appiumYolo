@@ -1,0 +1,35 @@
+name: 📱 Android UI Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Tag del release (ej: v1.2.0)"
+        required: true
+
+jobs:
+  mobile-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v3
+
+    - name: 📥 Download APK from GitHub Release
+      run: |
+        mkdir -p apk
+        gh release download ${{ inputs.release_tag }} \
+          --repo=${{ github.repository }} \
+          --pattern "app.apk" \
+          --dir=./
+
+    - name: ⚙️ Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: 📦 Install dependencies
+      run: npm install
+
+    - name: 🧪 Run Appium Tests
+      run: npm run test
